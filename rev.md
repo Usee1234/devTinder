@@ -22,3 +22,7 @@ push all code to remote origin
 >> git branch -M main
 >> git push -u origin main
 
+Play with routes and root extensions remember order of the routes matter a lot...
+install postman app and make a test API CALL
+
+write logiic to handel GET,POST PATCH,DELETE APIcalls and test them on Postman 

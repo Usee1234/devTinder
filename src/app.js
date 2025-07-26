@@ -58,7 +58,42 @@ const app=express();
 // app.use("/user",(req,res,next)=>{
 //     res.send("HAHAHA ALL THINGHS OVERIDED BY THIS CODE");
 // })
+
+// The error is caused by the route path "/ab?c" in your code. In Express 5.x, the route path syntax is stricter, and the ? 
+// character is not supported in the same way as in Express 4.x.
+//this is not supproted in express 5.x
+// app.get("/ab?c", (req, res) => {
+//   res.send("abc");
+// });
+
+// app.get(/\/ab?c$/, (req, res) => {
+//   res.send("abc");//here  b is optional so it will match both /ac and /abc.
+// });
+
+// app.get(/\/ab+c$/, (req, res) => {
+//   res.send("abc222");//here  b is optional so it will match both /ac and /abc.
+// });
+// app.get(/ab.*cd$/, (req, res) => {
+//   res.send("abc anything");//here  after ab anything but ends with cd is optional so it will match both /ac and /abc.
+// });
+
+// app.get(/.*.com$/, (req, res) => {
+//   res.send("abcuudh");//here  after ab anything but ends with cd is optional so it will match both /ac and /abc.
+// });
+//This  req.params is an object that contains the route parameters of the request.
+
+
+// app.get("/user/:userid/:passkey/:name",(req,res)=>{
+// console.log(req.params);
+// res.send({FirstName:"Vibhu",
+//     LastName:"Mathur"});
+// })
+
+// this req.query is an object that contains the query parameters of the request.
+
+
 app.get("/user",(req,res)=>{
+console.log(req.query);
 res.send({FirstName:"Vibhu",
     LastName:"Mathur"});
 })

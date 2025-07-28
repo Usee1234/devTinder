@@ -25,7 +25,7 @@ const userAuth=(req,res,next)=>{
 }
 const vibhuAuth=(req,res,next)=>{
     const Actualtoken="vibhu";
-    const isAuthenticated=Actualtoken==="vibhu88"; // This is just a dummy check for the sake of example here we are assigning and decalring const at same 
+    const isAuthenticated=Actualtoken==="vibhu"; // This is just a dummy check for the sake of example here we are assigning and decalring const at same 
     // time so we cant get error but if we assign it later we should use let or var as const cant be modified.
     if(!isAuthenticated){
         return res.status(401).send("Unauthorized access");

@@ -210,6 +210,11 @@ The next() function's purpose is to pass control to the next middleware function
 next funxtion  and errors along with res.send
 Multiple Route handeleers,use of next
 app.use("/route",[r1,r2,r3],r4,r5....)
+write a dummy auth middleware for admin and for all users expect user/login we have done it with vibhu
+what is middleware
+
+Error Handeling
+
 
 Postmen benifits 
 

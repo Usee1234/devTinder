@@ -1,135 +1,76 @@
-//here we will intialize the app
-// this is a server where we will handle all the requests and establish the connection with the database establish our ever lasting TCP/ip connection in 
-//listen to the port and start the server.
-//we wiil be able to accept the incoming requests and send the response back to the client
-// this this is the main entry point of our application
-//this time we will be using express to handle the requests and responses
-//why?? //because it is a lightweight framework that helps us to handle the requests and responses easily
-//it is a minimal and flexible Node.js web application framework that provides a robust set of features 
-//to develop web and mobile applications. It facilitates the rapid development of Node.js-based web applications.
-//Let's start by installing express and nodemon
 
-
-//what is nodemodules?? //it is a folder that contains all the dependencies that we have installed using npm
-//it is a folder that contains all the packages that we have installed using npm we have basically downaloded the code of express and put it in this folder
-//it is a folder that contains all the packages that we have installed using npm we have basically
-//express added as first dependency in our package.json file.
-// and express is also dependent on many other packages and dependencies and its cascadedd if module has dependencies then those will also be installed in the node_modules folder
-//its a fucking chain reaction
 
 // let us create our srever now..
+
 const express = require('express');
 //creating a express application instance
 //this is the main entry point of our application
+
 const app=express();
-// created a server on our local machine   
-//now we will listen to the port 3000 and start the server
-//now how do we handel the code inside the server
-// uing app.use methos
-// app.use((req,res)=>{
-// res.send("Hello hello hellohello from home ");
+// this is a get route that client sends to the server.
+// app.get("/user",(req,res)=>{
+//     //this is a route handler for the /user route
+//     //this will handle all the get requests that come to the /user route
+//     console.log("get request received");
+//     res.send("Hello from the user route");
 // })
-//backend applications is what just a set of routing API's that we will be using to handle the requests and responses so you have to be really good at routing and handling the requests and responses
-// this code will override the every code as any thing which matches after the / will be handled by this code that is why it overrides all the routes
-// app.use("/hello/123/vibhu",(req,res)=>{ //similary it will handel any thing that comes after /hello like /hello/abc or /hello/xyz/hhdh/jdj
+// //this will handle only all the post requests that come to the /user route
 
+// app.post("/user",(req,res)=>{
+// console.log("save data to the database");
+// res.send("Data sucessfully saved to the database");
+// })
 
-// res.send("Hello Bhai Vibhu Kya HAAL Hain");// Jaise hi usko first matching route dikhega usko execute kar dega.
-// })
-// app.use("/hello/123",(req,res)=>{ //similary it will handel any thing that comes after /hello like /hello/abc or /hello/xyz/hhdh/jdj
-// res.send("Hello Hellon hellohello from 123");
-// })
-// app.use("/hello",(req,res)=>{ //similary it will handel any thing that comes after /hello like /hello/abc or /hello/xyz/hhdh/jdj
-// res.send("Hello hello hellohello");
+// app.delete("/user",(req,res)=>{
+// res.send("Data deleted from the database");
 // })
 
 
-//this is a middleware function that will be called for every request that comes to the server
-    //req is the request object that contains all the information about the request that came to the server
-    //res is the response object that we will use to send the response back to the client
-    // In Express, app.use() is a method to add middleware functions to your application. 
-    // Middleware functions are functions that have access to the request (req) and response (res) objects, 
-    // and the next() 
-    // function in the application’s request-response cycle.
-    // the first parameter in app .use can be a request handleler
+// // this will match all the HTTP method API calls to /test whjether it is GET, POST, PUT, DELETE, etc. this app.use one.
 
 
-//This will only handel get calls to the /user route
-// app.use("/user",(req,res,next)=>{
-//     res.send("HAHAHA ALL THINGHS OVERIDED BY THIS CODE");
-// })
+// we can add multiple route handlers for the same route app.use("/route", rh1, [rh2, rh3], ...)
+app.use("/user",
+    [(req,res,next)=>{
+    console.log("1st response");
+    // res.send("response!!!");
+    // Request handeler functions we are trying  to send two responses to the client which is wrong.res.send() and then response 2 also
 
-// The error is caused by the route path "/ab?c" in your code. In Express 5.x, the route path syntax is stricter, and the ? 
-// character is not supported in the same way as in Express 4.x.
-//this is not supproted in express 5.x
-// app.get("/ab?c", (req, res) => {
-//   res.send("abc");
-// });
-
-// app.get(/\/ab?c$/, (req, res) => {
-//   res.send("abc");//here  b is optional so it will match both /ac and /abc.
-// });
-
-// app.get(/\/ab+c$/, (req, res) => {
-//   res.send("abc222");//here  b is optional so it will match both /ac and /abc.
-// });
-// app.get(/ab.*cd$/, (req, res) => {
-//   res.send("abc anything");//here  after ab anything but ends with cd is optional so it will match both /ac and /abc.
-// });
-
-// app.get(/.*.com$/, (req, res) => {
-//   res.send("abcuudh");//here  after ab anything but ends with cd is optional so it will match both /ac and /abc.
-// });
-//This  req.params is an object that contains the route parameters of the request.
-
-
-// app.get("/user/:userid/:passkey/:name",(req,res)=>{
-// console.log(req.params);
-// res.send({FirstName:"Vibhu",
-//     LastName:"Mathur"});
-// })
-
-// this req.query is an object that contains the query parameters of the request.
-
-
-app.get("/user",(req,res)=>{
-console.log(req.query);
-res.send({FirstName:"Vibhu",
-    LastName:"Mathur"});
+    next(); // Passes control to the next middleware passes control to next route handler.
+}
+,(req,res,next)=>{
+    console.log("2nd response");
+    // res.send("Response 2 !!!");// No error beacuse there is no next() call here
+    next();
+}] //can mix and match the functions in the array
+,(req,res,next)=>{
+    console.log("3rd response");
+    next();
+    // res.send("Response 3!!!");
+}
+,(req,res,next)=>{
+    console.log("4th response");
+    res.send("Response 4 !!!");
+    // if we call next() here it will give an error as express will try to find the next route handler
+    //  but there is no next route handler so it will give an error.
 })
-//this will handle only all the post requests that come to the /user route
-app.post("/user",(req,res)=>{
-console.log("save data to the database");
-res.send("Data sucessfully saved to the database");
-})
-app.delete("/user",(req,res)=>{
-res.send("Data deleted from the database");
-})
-// this will match all the HTTP method API calls to /test whjether it is GET, POST, PUT, DELETE, etc. this app.use one.
-app.use("/test",(req,res)=>{
-    res.send("Hello from the server hehhe");
-})// this will handle any request that comes to the server with /test in the url  example /test/abc or /test/xyz/hello but not /test123 or /testabc as test123 is a diffrent
-//  string then simple test. but /test/anything will work...\
 
-// app.use("/abc",(req,res)=>{
-//     res.send("Helllo Its abc");
-// })
+//  app .use is used to handle all the requests that come to the /user route
+// it will handle all the HTTP methods like GET, POST, PUT, DELETE, etc.
+// its a middleware function that will be executed for all the requests that come to the /user route
+//  console.log("I will hang");
+    // Here we are n0t sending any response to the client this will go into infinite request and response loop its making an api call again and again
+    // res.send("Hello from the route handelr1");
+    //This is a Route handler for all requests to /user
 
-// app.use("/",(req,res)=>{
-// res.send("HOLA VIBHU");
-// }) //just by changeing order of the routes we can change the order of the execution of the routes the code will start matching the routes from top to bottom.
-// and this order is very very impoertant so we can say that deafult route is the last route that will be executed if no other route matches and it comes at 
-//the end of the code. or written at last in the order of execution.
+
+
 app.listen(7777,()=>{
     console.log("Server is running on port 7777");
 });
 //now we will send a response back to the client
 
-// see browser is the worst way to test ypur API'S to test your routes you can use postman or any other API testing tool
-//postman is a tool that allows you to test your API's by sending requests and receiving responses
-//you can also use curl command to test your API's from the terminal
 
-//postmamn is used for API testing and it is a very powerful tool that allows you to test your API's by sending requests and receiving responses
 
 
 

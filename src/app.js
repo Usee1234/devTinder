@@ -9,6 +9,12 @@ const express = require('express');
 const {adminAuth, userAuth, vibhuAuth}=require("./middlewares/auth"); 
 
 const app=express();
+app.listen(7777,()=>{
+    console.log("Server is running on port 7777");
+});
+//now we will send a response back to the client
+
+
 // this is a get route that client sends to the server.
 // app.get("/user",(req,res)=>{
 //     //this is a route handler for the /user route
@@ -86,10 +92,8 @@ app.use("/user",
 
 
 
-app.listen(7777,()=>{
-    console.log("Server is running on port 7777");
-});
-//now we will send a response back to the client
+
+
 
 
 
@@ -171,6 +175,29 @@ res.send("hello I am Vibhu Mathur")
 //aur middleware kya kar sakta hai wo check kar sakta req and res object ko accordingly and can modify them as well.
 // aur uss hisab se auth dega....
 
+
+// Error handeling in express 
+app.get("/profile",(req,res)=>{
+
+try{
+//logic of getting profile data
+
+throw new Error("Errror")  //genrally we handel errors inside routes using try catch // this is a good way
+}
+catch(err){
+res.status(500).send("Error Occurs handeled by catch"); //Handeled by catch
+}
+})
+// error ka middleware hamesha req ka res aane ke baad hi tu chalega
+
+// Middleware for Error
+app.use("/",(err,req,res,next)=>{//order is very imp agar pehele ye middleware likh doge to route err detect hi nahi hoga
+if(err){
+    console.log(err)
+    res.status(500).send("Error Occurs"); 
+    // we can keep this lines towards the end of our application  so that we can catch accordingly
+}
+})
 
 
 

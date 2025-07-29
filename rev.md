@@ -213,7 +213,11 @@ app.use("/route",[r1,r2,r3],r4,r5....)
 write a dummy auth middleware for admin and for all users expect user/login we have done it with vibhu
 what is middleware
 
-Error Handeling
+Error Handeling using app.use("/",(err,req,res,next)=>{
+    if(err){
+        ....
+    }
+})
 
 1:25
 Postmen benifits 
@@ -224,3 +228,10 @@ Postmen benifits
 //you can also use curl command to test your API's from the terminal
 
 //postmamn is used for API testing and it is a very powerful tool that allows you to test your API's by sending requests and receiving response
+
+
+Today we will connect our application to database (MongoDB) using mongoose....
+
+Fisrt we will connect our application to the database..
+This is our string
+mongodb+srv://VibhuM:mzoxK4qjG5PU9uuS@namastedata.5i2mywt.mongodb.net/?retryWrites=true&w=majority&appName=NamasteData

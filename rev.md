@@ -232,6 +232,36 @@ Postmen benifits
 
 Today we will connect our application to database (MongoDB) using mongoose....
 
-Fisrt we will connect our application to the database..
+==>First we will connect our application to the database..
 This is our string
 mongodb+srv://VibhuM:mzoxK4qjG5PU9uuS@namastedata.5i2mywt.mongodb.net/?retryWrites=true&w=majority&appName=NamasteData
+
+For example:
+Middleware (like adminAuth) is exported so it can be plugged into routes in your main app.
+Utility functions are exported so you can call them from different modules.
+Mongoose is different because it manages a global connection, but most utilities need to be exported to share their logic across your app.
+In Mongoose, managing a global connection means establishing a single, persistent connection to the MongoDB database that can be reused throughout the application, rather than creating a new connection for each operation or request. This approach optimizes resource usage, improves performance, and simplifies error handling. 
+
+Create a free cluster on MongoDB web
+intstall Mongosse
+connect ur app to Db "connection-url"/devtinder
+call the connectionDB first and connect to DB server then start ypur main server at 7777
+Now we create a schema of a user in devTinder collection
+
+In Mongoose, a model is a constructor function that provides an interface for interacting with a specific MongoDB collection. It's essentially a wrapper around a Mongoose schema, allowing you to perform CRUD (Create, Read, Update, Delete) operations and define custom methods for your data. Models are compiled from schemas, which define the structure and data types of documents within a collection. 
+Here's a breakdown: 
+Schema:
+A schema defines the structure of your data, including field names, data types, default values, and validators.
+Model:
+A model is built upon a schema and provides the methods to interact with the database.
+CRUD Operations:
+Models enable you to create new documents, query existing ones, update data, and delete documents from the database.
+Custom Methods:
+You can define custom methods on your models to encapsulate more complex logic related to your data.
+Example:
+const userModel = mongoose.model('User', userSchema); This line of code creates a model named User based on the userSchema. You can then use userModel to interact with the "users" collection in your MongoDB database.
+Essentially, models provide a structured and organized way to interact with your MongoDB database using Mongoose. They simplify database interactions by abstracting away the underlying MongoDB operations and providing a clear API for your application's data management. 
+
+create a user schema and then create a model.
+created a signup API and make POST api calls with post man and save the data.
+How we add dynamic data we gonna see...

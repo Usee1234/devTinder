@@ -7,13 +7,24 @@ const express = require('express');
 //this is the main entry point of our application
 
 const {adminAuth, userAuth, vibhuAuth}=require("./middlewares/auth"); 
-
+const {connectDB}=require("./config/database");
 const app=express();
+const {User}=require("./models/user")
+connectDB().then((val)=>{
+console.log("Database connceted ")//First DB server is conneceted 
 app.listen(7777,()=>{
-    console.log("Server is running on port 7777");
-});
-//now we will send a response back to the client
+    console.log("Server Connected at 7777 ")
+})
+// now ideally server should be conncted but srvere cant be exported here so we export that connectDB
+}).catch((err)=>{
+    console.log("Error oocured")
+    console.log(err);
+})
 
+//here server is connected but our database may or may nit be conncetd So First we have to connect to the database server.
+//  then only main server or do app.listen after DB connection.
+//now we will send a response back to the client
+ 
 
 // this is a get route that client sends to the server.
 // app.get("/user",(req,res)=>{
@@ -188,9 +199,50 @@ catch(err){
 res.status(500).send("Error Occurs handeled by catch"); //Handeled by catch
 }
 })
-// error ka middleware hamesha req ka res aane ke baad hi tu chalega
 
-// Middleware for Error
+// Creating an API FOR OUR USER DB we will create a post API which will signup the user 
+
+app.post("/signup",async(req,res)=>{
+// const myDb={
+//     firstName:"Aayush",
+//     lastNmae:"Mathur",
+//     emailID:"mathur@gmail.com",
+//     password:"qwerty@123",
+//     gender:"Male",
+//     age:67,
+//     phone:9251149767
+// }
+const user=new User({
+    firstName:"Aastha",
+    lastName:"Rastogi",
+    emailID:"Assur@gmail.com",
+    password:"AAty@1289",
+    gender:"Female",
+    age:24,
+    phone:4456119096
+});//new instance of our user is created mostly it returns a promise b/c its an async func
+try{
+await user.save();
+res.send("User created sucessfully")
+}
+catch(err){
+res.status(500).send("Data not posted check API");
+}
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Middleware for Error // error ka middleware hamesha req ka res aane ke baad hi tu chalega
 app.use("/",(err,req,res,next)=>{//order is very imp agar pehele ye middleware likh doge to route err detect hi nahi hoga
 if(err){
     console.log(err)
@@ -198,6 +250,8 @@ if(err){
     // we can keep this lines towards the end of our application  so that we can catch accordingly
 }
 })
+
+
 
 
 

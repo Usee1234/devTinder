@@ -201,8 +201,32 @@ res.status(500).send("Error Occurs handeled by catch"); //Handeled by catch
 })
 
 // Creating an API FOR OUR USER DB we will create a post API which will signup the user 
-
+app.use(express.json()); // this is a middleware ==> it will work for all the routes handellling the req and proscessing the json data and parsing it before the route was invoked 
+// asyncly will be handeled by this... write once and use it any where it is the concept of middleware
 app.post("/signup",async(req,res)=>{
+//this data should be sent dynamicallay while I am makin a post call. we can do that using postmen w/o creating UI
+//data is sent in the form of redeable stream but our data is present in the body of the req object/var
+//creating a new instance of the model using the data which we recieved while the post API call
+const user=new User(req.body);
+try{
+    await user.save();
+    res.send("Data posted dynamically");
+}
+catch{
+    res.status(500).send("Error ocuured while posting data");
+}
+console.log(req.body);// now I can read this body properly
+
+// if we want to fetch the req data we have to use a middleware nd convert the Json by reading it into js object and put it into the body.
+// there is already a middleware for it that is express json
+
+
+
+})
+
+
+
+
 // const myDb={
 //     firstName:"Aayush",
 //     lastNmae:"Mathur",
@@ -212,23 +236,24 @@ app.post("/signup",async(req,res)=>{
 //     age:67,
 //     phone:9251149767
 // }
-const user=new User({
-    firstName:"Aastha",
-    lastName:"Rastogi",
-    emailID:"Assur@gmail.com",
-    password:"AAty@1289",
-    gender:"Female",
-    age:24,
-    phone:4456119096
-});//new instance of our user is created mostly it returns a promise b/c its an async func
-try{
-await user.save();
-res.send("User created sucessfully")
-}
-catch(err){
-res.status(500).send("Data not posted check API");
-}
-})
+
+// const user=new User({
+//     firstName:"Ms",
+//     lastName:"Dhoni",
+//     emailID:"MS@gmail.com",
+//     password:"MS@3EJ",// this data should be sent dynamicallay while I am makin a post call. we can do that using postmen w/o creating UI
+//     gender:"Male",//we want to send JSON DATA
+//     age:24,
+//     phone:4456119096
+// });//new instance of our user is created mostly it returns a promise b/c its an async func
+// try{
+// await user.save();
+// res.send("User created sucessfully")
+// }
+// catch(err){
+// res.status(500).send("Data not posted check API");
+// }
+
 
 
 

@@ -421,3 +421,6 @@ Invokes next() internally: After performing its function (parsing the JSON data 
 Therefore, when a client makes a POST API call to your server with a JSON payload, the app.use(express.json()) middleware will intercept that request, parse the JSON data, and populate req.body before the app.post() route handler for that specific endpoint is executed. This is why you can then access req.body.propertyName inside your POST route handler. 
 
 add the express.json() middleware and make the signup API ddynamic usiing poostman etc or UI 
+
+
+Letus now read the data

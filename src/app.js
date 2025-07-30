@@ -210,18 +210,16 @@ app.post("/signup",async(req,res)=>{
 const user=new User(req.body);
 try{
     await user.save();
+    console.log(req.body);
     res.send("Data posted dynamically");
 }
 catch{
     res.status(500).send("Error ocuured while posting data");
 }
-console.log(req.body);// now I can read this body properly
+// now I can read this body properly
 
 // if we want to fetch the req data we have to use a middleware nd convert the Json by reading it into js object and put it into the body.
 // there is already a middleware for it that is express json
-
-
-
 })
 
 
@@ -254,9 +252,49 @@ console.log(req.body);// now I can read this body properly
 // res.status(500).send("Data not posted check API");
 // }
 
+// Let us now make a get request for devtinder this feed api get all the users from the DATA BASE to show yiu matching optoions
+// dummy get req for 1 user
+// app.get("/user1",async(req,res)=>{
+//     const userEmail=req.body.emailID;
+//     try{
+//         const users=await User.find({emailID:userEmail});//emailID:userEmail
+//         if(users.length===0){
+//             res.status(400).send("Data not found");
+//         }
+//         else{
+//         console.log(users);
+//         res.send(users);
+//         }
+//     }
+//     catch(err){
+//           console.log(err)
+//            res.status(404).send(" Ahh Something went wrong")
+//     }
+   
+     
+// })
+app.get("/feed",async(req,res)=>{
+    // const userEmail=req.body.emailID;
+    try{
+        const users=await User.find({});//emailID:userEmail
+        if(users.length===0){
+            res.status(400).send("Data not found");
+        }
+        else{
+        console.log(users);
+        res.send(users);
+        }
+    }
+    catch(err){
+          console.log(err)
+           res.status(404).send(" Ahh Something went wrong")
+    }
+   
+     
+})
+// app.get("/feed",(req,res)=>{
 
-
-
+// })
 
 
 

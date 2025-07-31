@@ -424,3 +424,57 @@ add the express.json() middleware and make the signup API ddynamic usiing poostm
 
 
 Letus now read the data
+
+
+API get user by email
+API create feed API GET/Feed -Get all the users from the database
+Create get user by ID
+
+✅ Summary
+_id is always there by default in MongoDB documents.
+
+You can use findByIdAndDelete(someId) even without declaring _id in schema.
+
+req.body.userId is just a variable holding the _id of the document you want to delete.
+
+You can rename the variable to anything (idToDelete, abc, etc.) — what matters is the value, not the name
+
+
+post req for frontend 
+
+<!-- <html>
+<form id="userForm">
+  <input type="text" id="name" placeholder="Name" required />
+  <input type="email" id="email" placeholder="Email" required />
+  <button type="submit">Create User</button>
+</form>
+
+<div id="message"></div> -->
+
+<!-- <script>
+  document.getElementById("userForm").addEventListener("submit", async function (e) {
+    e.preventDefault(); // prevent page reload
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+
+    const newUser = { name, email };
+
+    try {
+      const response = await fetch("/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newUser)
+      });
+
+      const text = await response.text();
+      document.getElementById("message").innerText = text;
+    } catch (error) {
+      console.error("Error creating user:", error);
+      document.getElementById("message").innerText = "Something went wrong!";
+    }
+  }); -->
+</script>
+//hamesha jo bhi vheez UI se aayegi wo req mai hogi

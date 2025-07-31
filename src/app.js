@@ -278,7 +278,7 @@ app.get("/feed",async(req,res)=>{
     try{
         const users=await User.find({});//emailID:userEmail
         if(users.length===0){
-            res.status(400).send("Data not found");
+            res.status(400).send("Data not found");// ye error jab aayega jab data nahi hoga..
         }
         else{
         console.log(users);
@@ -287,7 +287,7 @@ app.get("/feed",async(req,res)=>{
     }
     catch(err){
           console.log(err)
-           res.status(404).send(" Ahh Something went wrong")
+           res.status(404).send(" Ahh Something went wrong")//API FAIL HOGI JAB AAYEGA
     }
    
      
@@ -296,9 +296,67 @@ app.get("/feed",async(req,res)=>{
 
 // })
 
+app.get("/user1",async(req,res)=>{
+    try{
+        const email=req.body.emailID;
+        const user=await User.findOne({emailID:email})
+        console.log(req.body)
+        res.send(user);
+        console.log(user);
+    }
+    catch(err){
+        console.log(err)
+        res.status(404).send("EError")
+    }
+})
+app.delete("/user2",async(req,res)=>{
+    try{
+        const userID=req.body.userID;
+        const del=await User.findByIdAndDelete(userID)//({_id:userID}) /user2 route pe jaise hi mai hit karoonga to del API call hogi
+        console.log(del);
+        if(del==null){
+            res.status(404).send("Data dont exist")
+        }
+        res.send("Data deleted sucsessfully");
+        
+    }
+    catch(err){
+        console.log(err)
+        res.status(404).send("EError")
+    }
+})
+app.patch("/user3",async(req,res)=>{
+       const userId=req.body.userId; //ye isme whai assume karegea as id jo postman se body se aap behjoge so if ypu are sending _id.
+       // then key in frontend should be _id only
+       const data=req.body;
+       try{
+        const user=await User.findByIdAndUpdate({_id:userId},data,{
+            returnDocument:"after"
+        })
+         console.log(user)
+         res.send("User Updated !!!")
+       }
+       catch(err){
+        
+        console.log(err)
+         res.status(404).send("EError!!!")
+       }
+})
 
 
+// //example frontend agains del API
+// //  async function deleteUser(userID) {
+//     const response = await fetch("/user2", {
+//       method: "DELETE",                         //ye puri ki puri del API ki fetch request hai
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       body: JSON.stringify({ userID })
+//     });
 
+//     const text = await response.text();  //this is response from backend...
+//     console.log(text); // "Data deleted successfully" or error
+//   }
 
 
 
